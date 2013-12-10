@@ -107,30 +107,30 @@
 		846D45FD17FA6ECF0070004D /* raytracer */ = {
 			isa = PBXGroup;
 			children = (
-				846D460717FA6F1D0070004D /* 3DObject.cpp */,
 				846D460817FA6F1D0070004D /* 3DObject.h */,
-				846D460917FA6F1D0070004D /* Camera.cpp */,
+				846D460717FA6F1D0070004D /* 3DObject.cpp */,
 				846D460A17FA6F1D0070004D /* Camera.h */,
+				846D460917FA6F1D0070004D /* Camera.cpp */,
 				846D460B17FA6F1D0070004D /* common.h */,
 				846D460C17FA6F1D0070004D /* getopt_long.cpp */,
 				846D460D17FA6F1D0070004D /* getopt.h */,
 				846D460E17FA6F1D0070004D /* Group.cpp */,
 				846D460F17FA6F1D0070004D /* Group.h */,
-				846D461017FA6F1D0070004D /* Hit.cpp */,
 				846D461117FA6F1D0070004D /* Hit.h */,
-				846D461217FA6F1D0070004D /* Image.cpp */,
+				846D461017FA6F1D0070004D /* Hit.cpp */,
 				846D461317FA6F1D0070004D /* Image.h */,
-				846D461417FA6F1D0070004D /* Mat3.cpp */,
+				846D461217FA6F1D0070004D /* Image.cpp */,
 				846D461517FA6F1D0070004D /* Mat3.h */,
-				846D461617FA6F1D0070004D /* Mat4.cpp */,
+				846D461417FA6F1D0070004D /* Mat3.cpp */,
 				846D461717FA6F1D0070004D /* Mat4.h */,
-				846D461817FA6F1D0070004D /* Material.cpp */,
+				846D461617FA6F1D0070004D /* Mat4.cpp */,
 				846D461917FA6F1D0070004D /* Material.h */,
-				846D461A17FA6F1D0070004D /* Ray.cpp */,
+				846D461817FA6F1D0070004D /* Material.cpp */,
 				846D461B17FA6F1D0070004D /* Ray.h */,
+				846D461A17FA6F1D0070004D /* Ray.cpp */,
 				846D461C17FA6F1D0070004D /* raytrace.cpp */,
-				846D461D17FA6F1D0070004D /* Scene.cpp */,
 				846D461E17FA6F1D0070004D /* Scene.h */,
+				846D461D17FA6F1D0070004D /* Scene.cpp */,
 				846D461F17FA6F1D0070004D /* scene1_01.txt */,
 				846D462017FA6F1D0070004D /* scene1_02.txt */,
 				846D462117FA6F1D0070004D /* scene1_03.txt */,
@@ -319,6 +319,7 @@
 				846D460617FA6ECF0070004D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
