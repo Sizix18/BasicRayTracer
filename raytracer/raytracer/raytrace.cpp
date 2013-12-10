@@ -153,8 +153,10 @@ int main( int argc, char **argv ){
     
     //create a vector to store all of the rays
     std::vector<Ray*> listOfRays;
+    
     //fill the list of rays depending on the pixelSize, Height, and Width of the ViewPlane
     rayFactory(listOfRays, gTheScene->camera(), gTheScene->viewPlane());
+    
     //create a vector to store all of the hits
     std::vector<Hit*> listOfHits;
     
@@ -172,6 +174,8 @@ int main( int argc, char **argv ){
         }
         
     }
+    
+
     //scale the t values to a range of 0 to 1
     double tMax, tMin = listOfHits[0]->t;
     for (int x = 0; x < listOfHits.size(); ++x) {
@@ -192,13 +196,17 @@ int main( int argc, char **argv ){
             depthColor = depthClamp(listOfHits[h]->t);
             Vec3 light = (gTheScene->camera().center - listOfHits[h]->hit);
             light.normalize();
-            image.pixels[h] = gTheScene->Shader(*gTheScene->group()[listOfHits[h]->objectNumber], light, *listOfHits[h], gTheScene->group()[listOfHits[h]->objectNumber]->normal(*listOfHits[h]));
+            //Shader(<#Object &o#>, <#Vec3 &light#>, <#Hit &hitRecord#>, <#Vec3 normal#>)
+            //cout << listOfHits[h]->objectNumber <<endl;
+            image.pixels[h] = gTheScene->Shader(*gTheScene->group()[listOfHits[h]->objectNumber],
+                                                light,
+                                                gTheScene->group()[listOfHits[h]->objectNumber]->normal(*listOfHits[h]));
             depthImage.pixels[h] = Pixel(depthColor,depthColor,depthColor);
         }
         else {
             //otherwise set the color to our background color
             image.pixels[h] = gTheScene->backgroundColor();
-            depthImage.pixels[h] = Pixel(0,0,0);
+            depthImage.pixels[h] = Pixel(0.4,.8,0.4);
         }
     }
 

@@ -65,7 +65,7 @@ class Scene{
 		void setCurrentMaterial( int i );
 		Material* currentMaterial( );
 		std::vector<Object*> group( );
-        Pixel Shader(Object &o, Vec3 &light, Hit &hitRecord, Vec3 normal);
+        Pixel Shader(Object &o, Vec3 &light, Vec3 normal);
 		string& inputSceneFile( );
 		string& outputFile( );
 		string& depthFile( );
@@ -107,6 +107,9 @@ class Scene{
 		void nextToken( );
 		void parseCamera( );
     void parseOrthographicCamera( );
+    void parseSimplePerspectiveCamera( );
+    void parsePerspectiveCamera( );
+
 		void nextOnLine( );
 		bool areMoreTokens( );
 		void advance( );

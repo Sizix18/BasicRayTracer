@@ -48,27 +48,13 @@ public:
     Vec3 up;
     Vec3 right;
     Vec3 gaze;
+    double angle;
+    double distance;
 	Camera( );
     Camera(Vec3 c, Vec3 d, Vec3 u);
     Camera(double a, double b, double c, double e, double f, double g, double h, double i, double j);
 	~Camera( );
     
 };
-class orthographicCamera:public Camera
-{
-public:
-    
-};
 
-class perspectiveCamera:public Camera
-{
-public:
-    double angle;
-};
-
-class simplePerspectiveCamera:public Camera
-{
-public:
-    double distance;
-};
 #endif
