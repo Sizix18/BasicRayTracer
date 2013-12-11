@@ -7,18 +7,18 @@
 /*
  * Copyright (c) 2005-2013 Michael Shafae
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
- * are met: 
- * 
+ * are met:
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
  * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -51,11 +51,43 @@ bool tValueCmp(Hit a, Hit b)
 
 void rayFactory(std::vector<Ray*> &rays, Camera &c, ViewPlane &v)
 {
-    for (double i = ((v.height/2)-(v.pixelsize/2)); i >= (((v.height/2) * -1)); i -= v.pixelsize) {
-        for (double j = (((v.width/2) * -1)+(v.pixelsize/2)); j <=((v.width/2)); j += v.pixelsize) {
-            Vec3 rayOrigin(j,i, c.center.z());
-            Ray *addRay = new Ray(rayOrigin, c.direction);
-            rays.push_back(addRay);
+    
+    c.calcUVW();
+    //Used for calculating Simple Perspective Camera
+    if (c.distance > 0.0) {
+        for (double i = ((v.height/2)-(v.pixelsize/2)); i >= (((v.height/2) * -1)); i -= v.pixelsize) {
+            for (double j = (((v.width/2) * -1)+(v.pixelsize/2)); j <=((v.width/2)); j += v.pixelsize) {
+                
+                Vec3 rayOrigin(c.center);
+                Vec3 direction = (j * c.u + i *c.v) - c.distance * c.w;
+                direction.normalize();
+                Ray *addRay = new Ray(rayOrigin, direction);
+                rays.push_back(addRay);
+            }
+        }
+    }
+    //Used for calculating Perspective Camera
+
+    if (c.angle > 0.0) {
+        c.distance =(v.width/2.0)/(sin(DEG2RAD(c.angle)))/cos((DEG2RAD(c.angle)));
+        for (double i = ((v.height/2)-(v.pixelsize/2)); i >= (((v.height/2) * -1)); i -= v.pixelsize) {
+            for (double j = (((v.width/2) * -1)+(v.pixelsize/2)); j <=((v.width/2)); j += v.pixelsize) {
+                Vec3 rayOrigin(c.center);
+                Vec3 direction = (j * c.u + i *c.v) - c.distance * c.w;
+                direction.normalize();
+                Ray *addRay = new Ray(rayOrigin, direction);
+                rays.push_back(addRay);
+            }
+        }
+    }
+    //Used for calculating Orthographic Camera
+    if (c.angle == 0.0 && c.distance == 0.0) {
+        for (double i = ((v.height/2)-(v.pixelsize/2)); i >= (((v.height/2) * -1)); i -= v.pixelsize) {
+            for (double j = (((v.width/2) * -1)+(v.pixelsize/2)); j <=((v.width/2)); j += v.pixelsize) {
+                Vec3 rayOrigin(j,i, c.center.z());
+                Ray *addRay = new Ray(rayOrigin, c.direction);
+                rays.push_back(addRay);
+            }
         }
     }
 }
@@ -86,17 +118,17 @@ void usage( string message = "" ){
 void parseCommandLine( int argc, char **argv ){
 	int ch;
 	string inputFile( "" ), outputFile( "" ), depthFile( "" );
-  int resolution;
+    int resolution;
 	static struct option longopts[] = {
-    { "input", required_argument, NULL, 'i' },
-    { "output", required_argument, NULL, 'o' },
-    { "depth", required_argument, NULL, 'd' },
-    { "resolution", required_argument, NULL, 'r' },
-    { "verbose", required_argument, NULL, 'v' },
-    { "help", required_argument, NULL, 'h' },
-    { NULL, 0, NULL, 0 }
+        { "input", required_argument, NULL, 'i' },
+        { "output", required_argument, NULL, 'o' },
+        { "depth", required_argument, NULL, 'd' },
+        { "resolution", required_argument, NULL, 'r' },
+        { "verbose", required_argument, NULL, 'v' },
+        { "help", required_argument, NULL, 'h' },
+        { NULL, 0, NULL, 0 }
 	};
-
+    
 	while( (ch = getopt_long(argc, argv, "i:o:d:r:vh", longopts, NULL)) != -1 ){
 		switch( ch ){
 			case 'i':
@@ -112,14 +144,14 @@ void parseCommandLine( int argc, char **argv ){
 				depthFile = string( optarg );
 				break;
 			case 'r':
-        resolution = atoi(optarg);
-        break;
-      case 'v':
-        // set your flag here.
-        break;
-      case 'h':
-        usage( );
-        break;
+                resolution = atoi(optarg);
+                break;
+            case 'v':
+                // set your flag here.
+                break;
+            case 'h':
+                usage( );
+                break;
 			default:
 				// do nothing
 				break;
@@ -136,10 +168,10 @@ int main( int argc, char **argv ){
 	argc -= optind;
 	argv += optind;
 	if( gTheScene->hasInputSceneFilePath( ) &&
-			gTheScene->hasOutputFilePath( ) &&
-			gTheScene->hasDepthFilePath( ) ){
-		gTheScene->parse( );	
-		cout << *gTheScene << endl;	
+       gTheScene->hasOutputFilePath( ) &&
+       gTheScene->hasDepthFilePath( ) ){
+		gTheScene->parse( );
+		cout << *gTheScene << endl;
 	}else{
 		usage( "You specify an input scene file, an output file and a depth file." );
         exit(1);
@@ -164,18 +196,18 @@ int main( int argc, char **argv ){
     for (int j = 0; j < listOfRays.size(); ++j) {
         listOfHits.push_back(new Hit());
     }
-   
+    
     //Check for intersections with every object in our list of objects
-      for (int r = 0; r < listOfRays.size(); ++r) {
+    for (int r = 0; r < listOfRays.size(); ++r) {
         for (int obj = 0; obj < gTheScene->group().size(); ++obj) {
             if(gTheScene->group()[obj]->Intersect(*listOfRays[r], *listOfHits[r])){
-            listOfHits[r]->objectNumber = obj;
+                listOfHits[r]->objectNumber = obj;
             }
         }
         
     }
     
-
+    
     //scale the t values to a range of 0 to 1
     double tMax, tMin = listOfHits[0]->t;
     for (int x = 0; x < listOfHits.size(); ++x) {
@@ -184,7 +216,7 @@ int main( int argc, char **argv ){
         }
         if (tMin > listOfHits[x]->t) {
             tMin = listOfHits[x]->t;
-
+            
         }
     }
     //For each hit we calculate the light being reflected
@@ -209,7 +241,7 @@ int main( int argc, char **argv ){
             depthImage.pixels[h] = Pixel(0.4,.8,0.4);
         }
     }
-
+    
     image.write(gTheScene->outputFile().c_str());
     depthImage.write(gTheScene->depthFile().c_str());
 	return( 0 );

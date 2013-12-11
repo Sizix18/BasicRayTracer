@@ -254,10 +254,16 @@ void Scene::parsePerspectiveCamera( )
 		nextToken( );
 		vec[i] = parseFloat( );
 	}
+    myCamera.up.x(vec[0]);
+    myCamera.up.y(vec[1]);
+    myCamera.up.z(vec[2]);
+    myCamera.gaze = (myCamera.center - myCamera.direction);
+    myCamera.right = (cross(myCamera.gaze, myCamera.up));
     nextToken();
     checkToken("angle", "Camera");
     nextToken();
     angle = parseFloat();
+    myCamera.angle = angle;
     nextToken( );
 	checkToken( "}", "Camera" );
     
@@ -294,8 +300,15 @@ void Scene::parseSimplePerspectiveCamera( )
 		nextToken( );
 		vec[i] = parseFloat( );
 	}
+    myCamera.up.x(vec[0]);
+    myCamera.up.y(vec[1]);
+    myCamera.up.z(vec[2]);
+    myCamera.gaze = (myCamera.center - myCamera.direction);
+    myCamera.right = (cross(myCamera.gaze, myCamera.up));
     nextToken();
     checkToken("distance", "Camera");
+    nextToken();
+    distance = parseFloat();
     myCamera.distance = distance;
     nextToken( );
 	checkToken( "}", "Camera" );

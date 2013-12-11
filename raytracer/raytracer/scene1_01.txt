@@ -1,9 +1,10 @@
 
-OrthographicCamera {
-    center 0 0 10 
+PerspectiveCamera {
+    center 0 0 10
     direction 0 0 -1  
     up 0 1 0
-}
+    angle 50
+    }
 
 ViewPlane {
     width 5
@@ -24,22 +25,17 @@ Materials {
 }
 
 Group {
-    numObjects 3
+    numObjects 2
     MaterialIndex 0
     Sphere {
 	center 0 0 0 
         radius 1 
     }
-    MaterialIndex 0
-    Triangle {
-    a -2 -2 -8
-    b 2 2 -8
-    c -2 2.5 10
-    }
     MaterialIndex 1
-    Plane {
-    normal 1 6 1
-    a 1 1 -6
+    Triangle {
+    a -5 2 -10
+    b 5 2 -10
+    c 0 4 0
     }
 }
 

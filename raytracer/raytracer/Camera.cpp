@@ -9,7 +9,7 @@
 #include "Camera.h"
 
 Camera::Camera( )
-:center(0.0,0.0,0.0), direction(0.0,0.0,0.0), up(0.0,0.0,0.0), angle(0), distance(0)
+:center(0.0,0.0,0.0), direction(0.0,0.0,0.0), up(0.0,0.0,0.0), angle(0.0), distance(0.0), u(0.0,0.0,0.0),v(0.0,0.0,0.0), w(0.0,0.0,0.0)
 {
     gaze = (direction - center);
     gaze.normalize();
@@ -17,7 +17,7 @@ Camera::Camera( )
 }
 
 Camera::Camera(double a, double b, double c, double e, double f, double g, double h, double i, double j)
-:center(a,b,c),direction(e,f,g), up(h,i,j), angle(0), distance(0)
+:center(a,b,c),direction(e,f,g), up(h,i,j), angle(0.0), distance(0.0), u(0.0,0.0,0.0),v(0.0,0.0,0.0), w(0.0,0.0,0.0)
 {
     gaze = (direction - center);
     gaze.normalize();
@@ -26,7 +26,7 @@ Camera::Camera(double a, double b, double c, double e, double f, double g, doubl
 }
 
 Camera::Camera(Vec3 c, Vec3 d, Vec3 u)
-:center(c), direction(d), up(u), angle(0), distance(0)
+:center(c), direction(d), up(u), angle(0.0), distance(0.0), u(0.0,0.0,0.0),v(0.0,0.0,0.0), w(0.0,0.0,0.0)
 {
     gaze = (direction - center);
     gaze.normalize();
@@ -36,4 +36,16 @@ Camera::Camera(Vec3 c, Vec3 d, Vec3 u)
 Camera::~Camera()
 {
     
+}
+void Camera::calcUVW()
+{
+    w = center - direction;
+    w.normalize();
+    w.display();
+    u = cross(up, w);
+    u.normalize();
+    u.display();
+    v = cross(w, u);
+    v.normalize();
+    v.display();
 }

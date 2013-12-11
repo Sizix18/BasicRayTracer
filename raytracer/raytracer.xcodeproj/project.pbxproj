@@ -38,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07CF5C411857007300FC4CC9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		846D45FB17FA6ECF0070004D /* raytracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = raytracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		846D460017FA6ECF0070004D /* raytracer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = raytracer.1; sourceTree = "<group>"; };
 		846D460717FA6F1D0070004D /* 3DObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = 3DObject.cpp; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		846D45FD17FA6ECF0070004D /* raytracer */ = {
 			isa = PBXGroup;
 			children = (
+				07CF5C411857007300FC4CC9 /* README.md */,
 				846D460817FA6F1D0070004D /* 3DObject.h */,
 				846D460717FA6F1D0070004D /* 3DObject.cpp */,
 				846D460A17FA6F1D0070004D /* Camera.h */,

@@ -48,8 +48,10 @@ public:
     Vec3 up;
     Vec3 right;
     Vec3 gaze;
+    Vec3 u,v,w;
     double angle;
     double distance;
+    void calcUVW();
 	Camera( );
     Camera(Vec3 c, Vec3 d, Vec3 u);
     Camera(double a, double b, double c, double e, double f, double g, double h, double i, double j);
